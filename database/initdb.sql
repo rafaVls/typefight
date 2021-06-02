@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS highscores(
 
 CREATE TABLE IF NOT EXISTS players(
     player_uid UUID PRIMARY KEY,
-    player_name CHAR(3) UNIQUE NOT NULL,
+    player_name CHAR(10) UNIQUE NOT NULL,
     highscore_uid UUID REFERENCES highscores(highscore_uid) ON DELETE CASCADE NOT NULL,
     CONSTRAINT FK_Highscores UNIQUE (highscore_uid)
 );

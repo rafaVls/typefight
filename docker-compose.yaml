@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+    web:
+        build:
+            context: ${PWD}/src
+        image: typefight-flask:1.0
+        container_name: typefight-flask
+        ports:
+            - 5000:5000
+        environment:
+            - FLASK_APP=${FLASK_MODULE}
+            - FLASK_ENV=${FLASK_ENV}
+            # Remove this in production
+            - FLASK_RUN_HOST=0.0.0.0
+        volumes: 
+            - ${PWD}/src/typefight:/var/app/typefight
+        depends_on: 
+            - database
+    database:
+        build: 
+            context: ${PWD}/database
+        image: typefight-db:1.0
+        container_name: typefight-postgresql
+        ports: 
+            - 5432:5432
+        environment: 
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}
+            - POSTGRES_DB=${DB_NAME}
+            - PGTZ=America/Los_Angeles
+        volumes: 
+            - typefight-db:/var/lib/postgresql/data
+volumes: 
+    typefight-db:
+        driver: local
+        name: typefight-db

@@ -1,6 +1,6 @@
 import os
 
-from flask import current_app, g
+from flask import g
 import psycopg2
 
 def get_db():

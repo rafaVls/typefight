@@ -12,6 +12,9 @@ services:
             - FLASK_ENV=${FLASK_ENV}
             # Remove this in production
             - FLASK_RUN_HOST=0.0.0.0
+            - DB_USER=${DB_USER}
+            - DB_NAME=${DB_NAME}
+            - DB_PASSWORD=${DB_PASSWORD}
         volumes: 
             - ${PWD}/src/typefight:/var/app/typefight
         depends_on: 

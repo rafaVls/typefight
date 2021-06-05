@@ -3,7 +3,7 @@ from flask import (
 )
 
 from werkzeug.security import check_password_hash, generate_password_hash
-from typefight.db import get_db, close_db
+from typefight.db import get_db
 import secrets
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
@@ -12,8 +12,9 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 def register():
     # when method is POST, user is sending the register form
     if request.method == "POST":
-        player_name = request.form["player_name"]
+        player_name = request.form["username"]
         password = request.form["password"]
+        country = request.form["country"] if request.form["country"] != "" else None
         salt = secrets.token_hex(8)
         pass_salt = password + salt
 
@@ -38,15 +39,14 @@ def register():
         if error is None:
             cur.execute(
                 """
-                INSERT INTO players(player_uid, player_name, salt, pass_hash) 
-                VALUES(uuid_generate_v4(), %s, %s, %s)
-                """, (player_name, salt, generate_password_hash(pass_salt))
+                INSERT INTO players(player_uid, player_name, country, salt, pass_hash) 
+                VALUES(uuid_generate_v4(), %s, %s, %s, %s)
+                """, (player_name, country, salt, generate_password_hash(pass_salt))
             )
             db.commit()
             return redirect(url_for("game.index"))
 
         flash(error)
         cur.close()
-        close_db()
     
     return render_template("auth/register.html")

@@ -3,6 +3,7 @@ from flask import (
 )
 
 from werkzeug.security import check_password_hash, generate_password_hash
+from psycopg2.extras import RealDictCursor
 from typefight.db import get_db
 import secrets
 
@@ -44,9 +45,42 @@ def register():
                 """, (player_name, country, salt, generate_password_hash(pass_salt))
             )
             db.commit()
-            return redirect(url_for("game.index"))
+            return redirect(url_for("auth.login"))
 
         flash(error)
         cur.close()
     
     return render_template("auth/register.html")
+
+@bp.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        player_name = request.form["username"]
+        password = request.form["password"]
+
+        db = get_db()
+        cur = db.cursor(cursor_factory=RealDictCursor)
+        error = None
+
+        cur.execute(
+            "SELECT * FROM players WHERE player_name = %s", (player_name,)
+        )
+        player = cur.fetchone()
+        cur.close()
+
+        if player is None:
+            error = "Incorrect username."
+            return "Incorrect username."
+        elif not check_password_hash(player["pass_hash"], password + player["salt"]):
+            error = "Incorrect password."
+            return "Incorrect password."
+        
+        if error is None:
+            session.clear()
+            # if login was successful, store the user's id in a cookie for future requests
+            session["player_uid"] = player["player_uid"]
+            return redirect(url_for("index"))
+        
+        flash(error)
+    
+    return render_template("auth/login.html")

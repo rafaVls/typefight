@@ -1,14 +1,12 @@
-<!-- temporary until I create a base html file -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-</head>
-<body>
-    <form method="POST">
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+{% endblock %}
+
+{% block content %}
+    <form action="{{ url_for('auth.register') }}" method="POST">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" required>
         <label for="password">Password</label>
@@ -265,5 +263,20 @@
         <!-- Display flash messages here later -->
         <input type="submit" value="Signup">
     </form>
-</body>
-</html>
+    <button>Login</button>
+
+    <form action="{{ url_for('auth.login') }}" method="POST">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" required>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+        <input type="submit" value="Login">
+    </form>
+    <button>Register</button>
+
+    <ul>
+        {% for message in get_flashed_messages() %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

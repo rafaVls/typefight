@@ -9,9 +9,9 @@
     <div class="grid-container">
         <form action="{{ url_for('auth.register') }}" method="POST">
             <div class="inputs">
-                <label for="username">Username</label>
+                <label for="username">Username*</label>
                 <input type="text" name="username" id="username" required>
-                <label for="password">Password</label>
+                <label for="password">Password*</label>
                 <input type="password" name="password" id="password" required>
                 <label for="country">Country</label>
                 <select name="country" id="country">
@@ -272,22 +272,22 @@
                     {% endif %}
                 {% endwith %}
             </div>
-            <input type="submit" value="Signup">
+            <input type="submit" value="Signup" class="auth-button signup">
         </form>
 
-        <form action="{{ url_for('auth.login') }}" method="POST" id="login">
+        <form action="{{ url_for('auth.login') }}" method="POST" id="login" class="hidden">
             <div class="inputs">
                 <label for="username-login">Username</label>
                 <input type="text" name="username" id="username-login" required>
                 <label for="password-login">Password</label>
                 <input type="password" name="password" id="password-login" required>
             </div>
-            <input type="submit" value="Login">
+            <input type="submit" value="Login" class="auth-button login">
         </form>
 
         <div class="buttons">
-            <button>Login</button>
-            <button class="hidden">Register</button>
+            <button class="auth-button login">Login</button>
+            <button class="hidden auth-button signup">Register</button>
         </div>
     </div>
 

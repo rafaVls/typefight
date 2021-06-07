@@ -1,12 +1,60 @@
+@font-face {
+    font-family: CrimeFighter;
+    src: 
+        url("./font/CrimeFighterBB.woff2") format("woff"), 
+        url("./font/CrimeFighterBB.ttf") format("truetype"),
+        url("./font/CrimeFighterBB.svg") format("svg");
+}
+
 * {
     margin: 0;
     padding: 0;
 
     box-sizing: border-box;
+    font-family: CrimeFighter;
 }
 
 html, body {
     height: 100%;
+    font-size: 62.5%;
+}
+
+button, input[type="submit"] {
+    min-width: 20rem;
+    height: 4.75rem;
+    border: 0;
+
+    box-shadow: -7px -7px 0 black;
+}
+
+label {
+    font-size: 2.75rem;
+    color: white;
+}
+
+input:not([type="submit"]), select {
+    min-height: 2.75rem;
+    min-width: 200px;
+    padding: 0.5rem 1rem;
+    margin-top: 10px;
+
+    font-size: 1.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border-radius: 2rem;
+}
+
+button.auth-button, input[type="submit"].auth-button {
+    font-size: 3rem;
+    padding: 0.5rem 1rem;
+    color: white;
+}
+
+button.signup, input[type="submit"].signup {
+    background-color: hsl(243, 100%, 69%);
+}
+
+button.login, input[type="submit"].login {
+    background-color: hsl(0, 0%, 30%);
 }
 
 .hidden {

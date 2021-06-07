@@ -50,7 +50,7 @@ def register():
         flash(error)
         cur.close()
     
-    return render_template("auth/register.html")
+    return render_template("auth.html")
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -70,10 +70,8 @@ def login():
 
         if player is None:
             error = "Incorrect username."
-            return "Incorrect username."
         elif not check_password_hash(player["pass_hash"], password + player["salt"]):
             error = "Incorrect password."
-            return "Incorrect password."
         
         if error is None:
             session.clear()
@@ -83,7 +81,7 @@ def login():
         
         flash(error)
     
-    return render_template("auth/login.html")
+    return render_template("auth.html")
 
 bp.route("/logout")
 def logout():

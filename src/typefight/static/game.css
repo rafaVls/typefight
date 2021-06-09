@@ -1,0 +1,75 @@
+.hero-screen-grid {
+    grid-template-columns: 40% 60%;
+    grid-template-rows: 7rem repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+
+    background-color: hsl(215, 41%, 28%);
+}
+
+.hero-screen-grid > nav {
+    grid-row: 1 / 2;
+    grid-column: 1 / 4;
+    justify-self: end;
+
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 3rem;
+}
+
+.hero-screen-grid > nav > a.auth-button {
+    min-width: 12rem;
+    margin-left: 3rem;
+
+    font-size: 2rem;
+    font-family: Verdana, sans-serif;
+    text-decoration: none;
+    text-align: center;
+
+    cursor: default;
+}
+
+.hero-screen-grid > h1 {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+
+    font-size: 6rem;
+    letter-spacing: 2rem;
+
+    color: yellow;
+}
+
+.hero-screen-grid > p {
+    grid-row: 3 / 4;
+    grid-column: 2 / 3;
+    align-self: flex-start;
+    max-width: 40ch;
+
+    font-size: 1.6rem;
+    font-weight: 900;
+
+    letter-spacing: 1rem;
+    line-height: 2.5;
+    text-align: center;
+
+    color: white;
+}
+
+.hero-screen-grid > button {
+    grid-row: 4 / 5;
+    grid-column: 2 / 3;
+    align-self: flex-start;
+}
+
+.hero-screen-grid > img {
+    grid-row: 2 / 5;
+    grid-column: 1 / 2;
+
+    max-width: calc(100% - 10%);
+}
+
+@supports (-webkit-text-stroke: 1px black) {
+    .hero-screen-grid > h1 {
+        -webkit-text-stroke: 1px black;
+    }
+}

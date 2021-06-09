@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='game.css') }}">
+{% endblock %}
+{% block title %}
+    The typing game - Typefight
+{% endblock %}
+
+{% block content %}
+    <section class="grid-container hero-screen-grid">
+        <nav>
+            <a href="{{ url_for('auth.register') }}" class="auth-button signup">Signup</a>
+            <a href="{{ url_for('auth.login') }}" class="auth-button login">Login</a>
+        </nav>
+        
+            <h1>Typefight!</h1>
+            <p>Compete against players around the world to see who's the fastest typist!</p>
+            <button class="auth-button signup">Play</button>
+            <img src="{{ url_for('static', filename='images/typewriter.svg') }}" alt="People typing on a giant typewriter">
+    </section>
+{% endblock %}

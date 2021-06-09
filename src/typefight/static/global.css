@@ -6,6 +6,8 @@
         url("./font/CrimeFighterBB.svg") format("svg");
 }
 
+/* add cascadia font here in the future */
+
 * {
     margin: 0;
     padding: 0;
@@ -32,6 +34,7 @@ label {
     color: white;
 }
 
+/* Change font-family to variables */
 input:not([type="submit"]), select {
     min-height: 2.75rem;
     min-width: 200px;
@@ -43,18 +46,26 @@ input:not([type="submit"]), select {
     border-radius: 2rem;
 }
 
-button.auth-button, input[type="submit"].auth-button {
+/* add different button class for different text color (yellow) */
+button.auth-button, input[type="submit"].auth-button, a.auth-button {
     font-size: 3rem;
     padding: 0.5rem 1rem;
     color: white;
+    box-shadow: -7px -7px 0 black;
 }
 
-button.signup, input[type="submit"].signup {
+button.signup, input[type="submit"].signup, a.signup {
     background-color: hsl(243, 100%, 69%);
 }
 
-button.login, input[type="submit"].login {
+button.login, input[type="submit"].login, a.login {
     background-color: hsl(0, 0%, 30%);
+}
+
+.grid-container {
+    display: grid;
+    
+    min-height: 100vh;
 }
 
 .hidden {

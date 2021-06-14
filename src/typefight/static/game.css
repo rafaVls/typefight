@@ -22,7 +22,7 @@
     margin-left: 3rem;
 
     font-size: 2rem;
-    font-family: CascadiaCode, Verdana, sans-serif;
+    font-family: var(--font-regular);
     text-decoration: none;
     text-align: center;
 

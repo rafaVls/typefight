@@ -12,12 +12,17 @@
         url("./font/CascadiaCodePL.ttf") format("truetype");
 }
 
+:root {
+    --font-comic-book: CrimeFighter;
+    --font-regular: CascadiaCode, Verdana, sans-serif;
+}
+
 * {
     margin: 0;
     padding: 0;
 
     box-sizing: border-box;
-    font-family: CrimeFighter;
+    font-family: var(--font-comic-book);
 }
 
 html, body {
@@ -38,7 +43,6 @@ label {
     color: white;
 }
 
-/* Change font-family to variables */
 input:not([type="submit"]), select {
     min-height: 2.75rem;
     min-width: 200px;
@@ -46,7 +50,7 @@ input:not([type="submit"]), select {
     margin-top: 10px;
 
     font-size: 1.5rem;
-    font-family: CascadiaCode, Verdana, sans-serif;
+    font-family: var(--font-regular);
     border-radius: 2rem;
 }
 

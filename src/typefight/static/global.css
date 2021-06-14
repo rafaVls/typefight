@@ -15,6 +15,14 @@
 :root {
     --font-comic-book: CrimeFighter;
     --font-regular: CascadiaCode, Verdana, sans-serif;
+
+    --color-text-accent: yellow;
+
+    --color-box-bg: hsl(0, 0%, 30%);
+    --color-box-bg-accent: hsl(243, 100%, 69%);
+
+    --color-bg-dark: hsl(215, 41%, 28%);
+    --color-bg-light: hsl(252, 11%, 55%);
 }
 
 * {
@@ -55,7 +63,7 @@ input:not([type="submit"]), select {
 
     border: 0;
     box-shadow: -7px -7px 0 black;
-    background-color: hsl(0, 0%, 30%);
+    background-color: var(--color-box-bg);
 }
 
 .big-box {
@@ -71,13 +79,13 @@ input:not([type="submit"]), select {
 }
 
 .game {
-    color: yellow;
+    color: var(--color-text-accent);
     letter-spacing: 10px;
-    background-color: hsl(243, 100%, 69%);
+    background-color: var(--color-box-bg-accent);
 }
 
 .accent {
-    background-color: hsl(243, 100%, 69%);
+    background-color: var(--color-box-bg-accent);
 }
 
 .grid-container {

@@ -4,7 +4,7 @@
     align-items: center;
     justify-items: center;
 
-    background-color: hsl(215, 41%, 28%);
+    background-color: var(--color-bg-dark);
 }
 
 .hero-screen-grid > nav {
@@ -32,7 +32,7 @@
     font-size: 6rem;
     letter-spacing: 2rem;
 
-    color: yellow;
+    color: var(--color-text-accent);
 }
 
 .hero-screen-grid > p {

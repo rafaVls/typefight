@@ -30,14 +30,6 @@ html, body {
     font-size: 62.5%;
 }
 
-button, input[type="submit"] {
-    min-width: 20rem;
-    height: 4.75rem;
-    border: 0;
-
-    box-shadow: -7px -7px 0 black;
-}
-
 label {
     font-size: 2.75rem;
     color: white;
@@ -48,26 +40,44 @@ input:not([type="submit"]), select {
     min-width: 200px;
     padding: 0.5rem 1rem;
     margin-top: 10px;
-
+    
     font-size: 1.5rem;
     font-family: var(--font-regular);
     border-radius: 2rem;
 }
 
-/* add different button class for different text color (yellow) */
-button.auth-button, input[type="submit"].auth-button, a.auth-button {
-    font-size: 3rem;
+.box {
+    cursor: default;
     padding: 0.5rem 1rem;
-    color: white;
+
+    text-align: center;
+    text-decoration: none;
+
+    border: 0;
     box-shadow: -7px -7px 0 black;
+    background-color: hsl(0, 0%, 30%);
 }
 
-button.signup, input[type="submit"].signup, a.signup {
+.big-box {
+    min-width: 20rem;
+    height: 4.75rem;
+
+    font-size: 3.5rem;
+    letter-spacing: 5px;
+}
+
+.auth-box {
+    color: white;
+}
+
+.game {
+    color: yellow;
+    letter-spacing: 10px;
     background-color: hsl(243, 100%, 69%);
 }
 
-button.login, input[type="submit"].login, a.login {
-    background-color: hsl(0, 0%, 30%);
+.accent {
+    background-color: hsl(243, 100%, 69%);
 }
 
 .grid-container {

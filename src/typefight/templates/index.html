@@ -10,13 +10,13 @@
 {% block content %}
     <section class="grid-container hero-screen-grid">
         <nav>
-            <a href="{{ url_for('auth.register') }}" class="auth-button signup">Signup</a>
-            <a href="{{ url_for('auth.login') }}" class="auth-button login">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="box auth-box accent">Signup</a>
+            <a href="{{ url_for('auth.login') }}" class="box auth-box">Login</a>
         </nav>
         
             <h1>Typefight!</h1>
             <p>Compete against players around the world to see who's the fastest typist!</p>
-            <button class="auth-button signup">Play</button>
+            <a class="box big-box game" href="#">Play</a>
             <img src="{{ url_for('static', filename='images/typewriter.svg') }}" alt="People typing on a giant typewriter">
     </section>
 {% endblock %}

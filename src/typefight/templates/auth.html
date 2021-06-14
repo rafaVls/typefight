@@ -272,7 +272,7 @@
                     {% endif %}
                 {% endwith %}
             </div>
-            <input type="submit" value="Signup" class="auth-button signup">
+            <input type="submit" value="Signup" class="box auth-box big-box accent">
         </form>
 
         <form action="{{ url_for('auth.login') }}" method="POST" id="login" class="hidden">
@@ -282,12 +282,12 @@
                 <label for="password-login">Password</label>
                 <input type="password" name="password" id="password-login" required>
             </div>
-            <input type="submit" value="Login" class="auth-button login">
+            <input type="submit" value="Login" class="box auth-box big-box">
         </form>
 
         <div class="buttons">
-            <button class="auth-button login">Login</button>
-            <button class="hidden auth-button signup">Register</button>
+            <button class="box auth-box big-box">Login</button>
+            <button class="box auth-box big-box accent hidden">Register</button>
         </div>
     </div>
 {% endblock %}

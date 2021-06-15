@@ -66,12 +66,14 @@
 
 .game-grid {
     background-color: var(--color-bg-light);
-    grid-template-rows: 80px 1fr .5fr 80px;
+    grid-template-rows: 60px 1fr .5fr;
     align-items: center;
     justify-items: center;
 }
 
 .triangle {
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
     position: relative;
     background: var(--color-bg-dark);
     height: 0;
@@ -92,20 +94,39 @@
 }
 
 .game-grid > p {
-    max-width: 75%;
-
-    font-size: 2.25rem;
     font-weight: 900;
-
+    
     color: var(--color-text-light);
     letter-spacing: .5rem;
+}
+
+.game-grid > p:first-of-type {
+    font-family: var(--font-regular);
+    font-size: 3rem;
+
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+    z-index: 10;
+}
+
+.game-grid > p:last-of-type {
+    font-size: 2.25rem;
+
+    grid-row: 2 / 3;
+    max-width: 75%;
+
+
     line-height: 2;
 }
 
-.game-grid > p > mark {
+.game-grid > p:last-of-type > mark {
     color: var(--color-text-accent);
     background-color: transparent;
 
+}
+
+.game-grid > button {
+    grid-row: 3 / 4;
 }
 
 @supports (-webkit-text-stroke: 1px black) {

@@ -33,6 +33,10 @@
     font-family: var(--font-comic-book);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 html, body {
     height: 100%;
     font-size: 62.5%;
@@ -55,7 +59,7 @@ input:not([type="submit"]), select {
 }
 
 .box {
-    cursor: default;
+    /* cursor: default; */
     padding: 0.5rem 1rem;
 
     text-align: center;

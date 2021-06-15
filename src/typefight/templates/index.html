@@ -3,6 +3,7 @@
 {% block style %}
     <link rel="stylesheet" href="{{ url_for('static', filename='game.css') }}">
 {% endblock %}
+
 {% block title %}
     Home
 {% endblock %}
@@ -28,6 +29,10 @@
             which you have to type in using your keyboard (this includes
             symbols and spaces). Have fun!
         </p>
-        <button class="box big-box game">Start</button>
+        <button class="box big-box game" onclick="handleClick()">Start</button>
     </section>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock %}

@@ -17,6 +17,7 @@
     --font-regular: CascadiaCode, Verdana, sans-serif;
 
     --color-text-accent: yellow;
+    --color-text-light: white;
 
     --color-box-bg: hsl(0, 0%, 30%);
     --color-box-bg-accent: hsl(243, 100%, 69%);
@@ -44,7 +45,11 @@ html, body {
 
 label {
     font-size: 2.75rem;
-    color: white;
+    color: var(--color-text-light);
+}
+
+button {
+    cursor: pointer;
 }
 
 input:not([type="submit"]), select {
@@ -79,7 +84,7 @@ input:not([type="submit"]), select {
 }
 
 .auth-box {
-    color: white;
+    color: var(--color-text-light);
 }
 
 .game {

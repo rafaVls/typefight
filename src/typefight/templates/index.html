@@ -20,7 +20,13 @@
             <img src="{{ url_for('static', filename='images/typewriter.svg') }}" alt="People typing on a giant typewriter">
     </section>
 
-    <section class="grid-container" id="game">
+    <section class="grid-container game-grid" id="game">
         <div class="triangle"></div>
+        <p>
+            Once you click the <mark>start</mark> button, you'll get a random sentence,
+            which you have to type in using your keyboard (this includes
+            symbols and spaces). Have fun!
+        </p>
+        <button class="box big-box game">Start</button>
     </section>
 {% endblock %}

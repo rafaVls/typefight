@@ -69,3 +69,22 @@
         -webkit-text-stroke: 1px black;
     }
 }
+
+.triangle {
+    position: relative;
+    background: var(--color-bg-dark);
+    height: 0;
+}
+
+.triangle::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 80px 200px 0 200px;
+    border-color: var(--color-bg-dark) transparent transparent transparent;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+}

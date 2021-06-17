@@ -1,5 +1,6 @@
 const timer = document.getElementById("timer");
 const startBtn = document.getElementById("start-btn");
+const typedValue = document.getElementById("typed-value");
 
 let minutes = 0;
 let seconds = 0;
@@ -7,6 +8,7 @@ let start = 0;
 let timerInterval;
 
 function startGame() {
+    typedValue.focus();
     start = new Date().getTime();
     startBtn.innerText = "Restart";
     startBtn.setAttribute("onclick", "resetGame()");

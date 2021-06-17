@@ -26,9 +26,15 @@
         <p id="timer">00:00</p>
         <p>
             Once you click the <mark>start</mark> button, you'll get a random sentence,
-            which you have to type in using your keyboard (this includes
-            symbols and spaces). Have fun!
+            which you have to type in using your keyboard (this includes symbols and spaces). 
+            Have fun!
         </p>
+
+        <div>
+            <label for="typed-value">Type sentence <mark>here:</mark></label>
+            <input type="text" name="typed-value" id="typed-value">
+        </div>
+        
         <button class="box big-box game" id="start-btn" onclick="startGame()">Start</button>
     </section>
 {% endblock %}

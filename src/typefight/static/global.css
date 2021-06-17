@@ -48,6 +48,11 @@ label {
     color: var(--color-text-light);
 }
 
+mark {
+    color: var(--color-text-accent);
+    background-color: transparent;
+}
+
 button {
     cursor: pointer;
 }

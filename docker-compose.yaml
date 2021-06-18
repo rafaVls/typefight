@@ -1,25 +1,6 @@
 version: "3.8"
+
 services:
-    web:
-        build:
-            context: ${PWD}/src
-        image: typefight-flask:1.0
-        container_name: typefight-flask
-        ports:
-            - 5000:5000
-        environment:
-            - FLASK_APP=${FLASK_MODULE}
-            - FLASK_ENV=${FLASK_ENV}
-            # Remove this in production
-            - FLASK_RUN_HOST=0.0.0.0
-            - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
-            - DB_USER=${DB_USER}
-            - DB_NAME=${DB_NAME}
-            - DB_PASSWORD=${DB_PASSWORD}
-        volumes: 
-            - ${PWD}/src/typefight:/var/app/typefight
-        depends_on: 
-            - database
     database:
         build: 
             context: ${PWD}/database

@@ -9,7 +9,7 @@ def get_db():
             user=os.environ["DB_USER"],
             database=os.environ["DB_NAME"],
             password=os.environ["DB_PASSWORD"],
-            host="database"
+            host=os.environ["FLASK_RUN_HOST"]
         )
     return g.db
 

@@ -107,6 +107,10 @@
     grid-row: 1 / 2;
     grid-column: 1 / 2;
     z-index: 10;
+
+    /* Make sure text doesn't jump around when numbers change */
+    font-feature-settings: "tnum";
+    font-variant-numeric: tabular-nums;
 }
 
 .game-grid > p:last-of-type {

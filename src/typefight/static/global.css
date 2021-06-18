@@ -48,7 +48,7 @@ label {
     color: var(--color-text-light);
 }
 
-mark {
+mark, .highlight {
     color: var(--color-text-accent);
     background-color: transparent;
 }

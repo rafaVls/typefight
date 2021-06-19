@@ -100,7 +100,7 @@
     
     color: var(--color-text-light);
     letter-spacing: .5rem;
-    transition: font-size .8s;
+    transition: font-size .5s;
 }
 
 .game-grid > p:first-of-type {

@@ -1,15 +1,15 @@
 @font-face {
     font-family: CrimeFighter;
     src: 
-        url("./font/CrimeFighterBB.woff2") format("woff"), 
-        url("./font/CrimeFighterBB.ttf") format("truetype"),
-        url("./font/CrimeFighterBB.svg") format("svg");
+        url("/static/font/CrimeFighterBB.woff2") format("woff"), 
+        url("/static/font/CrimeFighterBB.ttf") format("truetype"),
+        url("/static/font/CrimeFighterBB.svg") format("svg");
 }
 
 @font-face {
     font-family: CascadiaCode;
     src: 
-        url("./font/CascadiaCodePL.ttf") format("truetype");
+        url("/static/font/CascadiaCodePL.ttf") format("truetype");
 }
 
 :root {

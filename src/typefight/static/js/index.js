@@ -3,6 +3,7 @@ const startBtn = document.getElementById("start-btn");
 const quoteElement = document.getElementById("quote");
 const typedValueElement = document.getElementById("typed-value");
 const typedValueContainerElement = document.getElementById("typed-value-container");
+typedValueElement.value = "";
 
 // Getting all css custom properties
 const styles = getComputedStyle(document.documentElement);
@@ -65,15 +66,7 @@ function gameManager(e) {
     const typedValue = typedValueElement.value;
 
     if (typedValue === currentWord && wordIndex === words.length - 1) {
-        clearInterval(timerInterval);
-
-        startBtn.remove();
-        quoteElement.remove();
-        typedValueContainerElement.remove();
-
-        timer.style.color = styles.getPropertyValue("--color-text-accent");
-        typedValueElement.removeEventListener("input", gameManager);
-        typedValueElement.value = "";
+        finishGame();
     } else if (typedValue.endsWith(" ") && typedValue.trim() === currentWord) {
         typedValueElement.value = "";
         wordIndex++;
@@ -85,4 +78,15 @@ function gameManager(e) {
     } else if (currentWord.startsWith(typedValue)) {
         typedValueElement.className = "";
     }
+}
+
+function finishGame() {
+    clearInterval(timerInterval);
+
+    startBtn.remove();
+    quoteElement.remove();
+    typedValueContainerElement.remove();
+
+    timer.style.color = styles.getPropertyValue("--color-text-accent");
+    typedValueElement.removeEventListener("input", gameManager);
 }

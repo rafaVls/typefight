@@ -2,6 +2,10 @@ const timer = document.getElementById("timer");
 const startBtn = document.getElementById("start-btn");
 const quoteElement = document.getElementById("quote");
 const typedValueElement = document.getElementById("typed-value");
+const typedValueContainerElement = document.getElementById("typed-value-container");
+
+// Getting all css custom properties
+const styles = getComputedStyle(document.documentElement);
 
 const quote = 'When you have eliminated the impossible, whatever remains, however improbable, must be the truth.';
 let words = [];
@@ -19,6 +23,7 @@ function startGame() {
     startBtn.setAttribute("onclick", "resetGame()");
 
     typedValueElement.addEventListener("input", gameManager);
+    typedValueElement.removeAttribute("tabindex");
     words = quote.split(' ');
     wordIndex = 0;
 
@@ -45,8 +50,10 @@ function resetGame() {
     clearInterval(timerInterval);
     console.log(((new Date().getTime() - start) / 1000).toFixed(2));
 
+    typedValueElement.setAttribute("tabindex", "-1");
     startBtn.setAttribute("onclick", "startGame()");
     startBtn.innerText = "Start";
+    startBtn.focus();
 
     seconds = 0;
     minutes = 0;
@@ -58,10 +65,15 @@ function gameManager(e) {
     const typedValue = typedValueElement.value;
 
     if (typedValue === currentWord && wordIndex === words.length - 1) {
-        resetGame();
-        startBtn.focus();
-        typedValueElement.remove();
+        clearInterval(timerInterval);
+
+        startBtn.remove();
+        quoteElement.remove();
+        typedValueContainerElement.remove();
+
+        timer.style.color = styles.getPropertyValue("--color-text-accent");
         typedValueElement.removeEventListener("input", gameManager);
+        typedValueElement.value = "";
     } else if (typedValue.endsWith(" ") && typedValue.trim() === currentWord) {
         typedValueElement.value = "";
         wordIndex++;

@@ -114,6 +114,6 @@ input:not([type="submit"]), select {
 
 @media (prefers-reduced-motion: no-preference) {
     .highlight {
-        font-size: 4rem;
+        font-size: 3.5rem;
     }
 }

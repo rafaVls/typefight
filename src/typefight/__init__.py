@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask, render_template
-from . import auth, db
+from . import auth, db, game
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
@@ -13,6 +13,7 @@ def create_app():
     app.config["SECRET_KEY"] = SECRET_KEY
 
     app.register_blueprint(auth.bp)
+    app.register_blueprint(game.bp)
     
     # this tells flask to call close_db on cleanup
     app.teardown_appcontext(db.close_db)

@@ -1,9 +1,8 @@
-import json
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from psycopg2.extras import RealDictCursor
 
 from typefight.db import get_db
-from . import utils
+from typefight.utils import make_serializable
 
 bp = Blueprint("game", __name__, url_prefix="/game")
 
@@ -23,5 +22,4 @@ def get_highscores():
     scores_table = cur.fetchall()
     cur.close()
 
-    scores = json.dumps(scores_table, default=utils.decimal_type_handler)
-    return scores
+    return jsonify(make_serializable(scores_table))

@@ -83,6 +83,7 @@ function gameManager(e) {
 
 function finishGame() {
     clearInterval(timerInterval);
+    console.log(((new Date().getTime() - start) / 1000).toFixed(2));
 
     startBtn.remove();
     quoteElement.remove();

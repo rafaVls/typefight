@@ -1,10 +1,14 @@
-from flask import Blueprint, jsonify
+from flask import render_template, Blueprint, jsonify
 from psycopg2.extras import RealDictCursor
 
 from typefight.db import get_db
 from typefight.utils import make_serializable
 
 bp = Blueprint("game", __name__)
+
+@bp.route("/")
+def index():
+    return render_template("index.html")
 
 @bp.route("/highscores")
 def get_highscores():

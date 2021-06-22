@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask
 from . import auth, db, game
 
 def create_app():
@@ -17,10 +17,5 @@ def create_app():
     
     # this tells flask to call close_db on cleanup
     app.teardown_appcontext(db.close_db)
-
-    # move this to "game" blueprint in the future
-    @app.route("/")
-    def index():
-        return render_template("index.html")
 
     return app

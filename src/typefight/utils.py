@@ -18,7 +18,7 @@ def make_serializable(data:list) -> list:
     
     return serialized_list
 
-def decimal_type_handler(object_to_check: (Decimal | any)) -> (float | any):
+def decimal_type_handler(object_to_check):
     """
     Checks if object_to_check is of type decimal;
     if it is, casts it into a float.

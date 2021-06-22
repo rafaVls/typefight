@@ -7,15 +7,15 @@ CREATE TABLE IF NOT EXISTS players(
     UNIQUE(player_name)
 );
 
-CREATE TABLE IF NOT EXISTS sentences(
-    sentence_uid UUID PRIMARY KEY,
-    sentence VARCHAR NOT NULL,
-    UNIQUE(sentence)
+CREATE TABLE IF NOT EXISTS quotes(
+    quote_uid UUID PRIMARY KEY,
+    quote VARCHAR NOT NULL,
+    UNIQUE(quote)
 );
 
 CREATE TABLE IF NOT EXISTS scores(
 player_uid UUID REFERENCES players(player_uid) ON DELETE CASCADE,
-sentence_uid UUID REFERENCES sentences(sentence_uid) ON DELETE CASCADE,
+quote_uid UUID REFERENCES quotes(quote_uid) ON DELETE CASCADE,
 score NUMERIC(6,2) NOT NULL CHECK(score > 0),
-PRIMARY KEY(player_uid, sentence_uid)
+PRIMARY KEY(player_uid, quote_uid)
 );

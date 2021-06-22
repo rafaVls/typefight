@@ -4,7 +4,7 @@ from psycopg2.extras import RealDictCursor
 from typefight.db import get_db
 from typefight.utils import make_serializable
 
-bp = Blueprint("game", __name__, url_prefix="/game")
+bp = Blueprint("game", __name__)
 
 @bp.route("/highscores")
 def get_highscores():

@@ -20,7 +20,7 @@ def create_app():
 
     # move this to "game" blueprint in the future
     @app.route("/")
-    def home():
+    def index():
         return render_template("index.html")
 
     return app

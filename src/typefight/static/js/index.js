@@ -93,7 +93,7 @@ function finishGame() {
 }
 
 async function getQuote() {
-    const res = await fetch("/game/quote");
+    const res = await fetch("/quote");
     const { quote } = await res.json();
 
     return quote;

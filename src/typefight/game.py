@@ -23,3 +23,19 @@ def get_highscores():
     cur.close()
 
     return jsonify(make_serializable(scores_table))
+
+@bp.route("/quote")
+def get_quote():
+    db = get_db()
+    cur = db.cursor(cursor_factory=RealDictCursor)
+
+    cur.execute(
+        """
+        SELECT quote FROM quotes ORDER BY RANDOM() LIMIT 1;
+        """
+    )
+
+    quote = cur.fetchone()
+    cur.close()
+
+    return jsonify(quote)

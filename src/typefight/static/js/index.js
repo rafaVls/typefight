@@ -8,7 +8,6 @@ typedValueElement.value = "";
 // Getting all css custom properties
 const styles = getComputedStyle(document.documentElement);
 
-const quote = 'When you have eliminated the impossible, whatever remains, however improbable, must be the truth.';
 let words = [];
 let wordIndex = 0;
 
@@ -17,8 +16,10 @@ let seconds = 0;
 let start = 0;
 let timerInterval;
 
-function startGame() {
+async function startGame() {
+    const quote = await getQuote();
     start = new Date().getTime();
+
     timer.innerText = "00:00";
     startBtn.innerText = "Restart";
     startBtn.setAttribute("onclick", "resetGame()");
@@ -89,4 +90,11 @@ function finishGame() {
 
     timer.style.color = styles.getPropertyValue("--color-text-accent");
     typedValueElement.removeEventListener("input", gameManager);
+}
+
+async function getQuote() {
+    const res = await fetch("/game/quote");
+    const { quote } = await res.json();
+
+    return quote;
 }

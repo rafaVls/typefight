@@ -12,6 +12,9 @@ def index():
 
 @bp.route("/highscores")
 def get_highscores():
+    # add POST method here so highscore will be updated if its higher than 
+    # their previous one.
+
     db = get_db()
     cur = db.cursor(cursor_factory=RealDictCursor)
 

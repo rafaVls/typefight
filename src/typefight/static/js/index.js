@@ -1,3 +1,4 @@
+const game = document.getElementById("game");
 const timer = document.getElementById("timer");
 const startBtn = document.getElementById("start-btn");
 const quoteElement = document.getElementById("quote");
@@ -85,6 +86,8 @@ function finishGame() {
     clearInterval(timerInterval);
     console.log(((new Date().getTime() - start) / 1000).toFixed(2));
 
+    createHighscoresTable(game);
+
     startBtn.remove();
     quoteElement.remove();
     typedValueContainerElement.remove();
@@ -98,4 +101,41 @@ async function getQuote() {
     const { quote } = await res.json();
 
     return quote;
+}
+
+async function getHighscores() {
+    const res = await fetch("/highscores");
+    const highscores = await res.json();
+
+    return highscores;
+}
+
+async function createHighscoresTable(containerElement) {
+    const highscores = await getHighscores();
+    const scoresContainer = document.createElement("table");
+    const headers = `
+        <thead>
+            <th>Highscores</th>
+            <th>Name</th>
+            <th>Country</th>
+        </thead>
+        <tbody></tbody>`;
+
+    // can't do highscores.map here because it appends a weird ","
+    // after every <tr>, since it returns an array.
+    let highscoresData = "";
+    for (const score of highscores) {
+        const values = `
+            <td>${score.score}</td>
+            <td>${score.player_name}</td>
+            <td>${score.country}</td>`;
+
+        highscoresData += `<tr>${values}</tr>`;
+    }
+
+    scoresContainer.innerHTML = headers;
+    scoresContainer.lastElementChild.innerHTML = highscoresData;
+    scoresContainer.setAttribute("id", "scores-container");
+
+    containerElement.appendChild(scoresContainer);
 }

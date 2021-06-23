@@ -112,7 +112,8 @@ async function getHighscores() {
 
 async function createHighscoresTable(containerElement) {
     const highscores = await getHighscores();
-    const scoresContainer = document.createElement("table");
+    const tableContainer = document.createElement("div");
+    const scoresTable = document.createElement("table");
     const headers = `
         <thead>
             <th>Highscores</th>
@@ -133,9 +134,11 @@ async function createHighscoresTable(containerElement) {
             </tr>`;
     }
 
-    scoresContainer.innerHTML = headers;
-    scoresContainer.lastElementChild.innerHTML = highscoresData;
-    scoresContainer.setAttribute("id", "scores-container");
+    scoresTable.innerHTML = headers;
+    scoresTable.lastElementChild.innerHTML = highscoresData;
+    tableContainer.className = "highscores-container";
+    scoresTable.className = "highscores";
 
-    containerElement.appendChild(scoresContainer);
+    tableContainer.appendChild(scoresTable);
+    containerElement.appendChild(tableContainer);
 }

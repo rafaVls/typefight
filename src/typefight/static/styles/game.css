@@ -131,6 +131,44 @@
     letter-spacing: 1px;
 }
 
+.highscores-container {
+    grid-row: 2 / 5;
+    align-self: baseline;
+    display: block;
+    overflow-y: auto;
+    
+    margin-top: 5rem;
+    min-width: 40rem;
+    max-height: 35%;
+}
+
+.highscores {
+    text-align: center;
+    font-size: 2.5rem;
+    border-collapse: collapse;
+}
+
+.highscores thead tr {
+    font-weight: 900;
+    color: var(--color-text-accent);
+}
+
+.highscores th,
+.highscores td {
+    padding: 1.5rem 10rem;
+}
+
+.highscores th {
+    position: sticky;
+    top: 0;
+    
+    background-color: var(--color-bg-light);
+}
+
+.highscores > tbody > tr:first-of-type td {
+    padding-top: min(30px, 3rem);
+}
+
 .game-grid > button {
     grid-row: 4 / 5;
 }

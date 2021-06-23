@@ -134,18 +134,17 @@
 .highscores-container {
     grid-row: 2 / 5;
     align-self: baseline;
-    display: block;
+    overflow: hidden;
     overflow-y: auto;
     
     margin-top: 5rem;
-    min-width: 40rem;
-    max-height: 35%;
+    max-height: 300px;
 }
 
 .highscores {
     text-align: center;
     font-size: 2.5rem;
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
 }
 
 .highscores thead tr {
@@ -162,7 +161,12 @@
     position: sticky;
     top: 0;
     
+    /* font-size: 2.5rem; */
     background-color: var(--color-bg-light);
+}
+
+.highscores td {
+    font-family: var(--font-regular);
 }
 
 .highscores > tbody > tr:first-of-type td {

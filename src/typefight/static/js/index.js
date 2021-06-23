@@ -130,7 +130,7 @@ async function createHighscoresTable(containerElement) {
             <tr>
                 <td>${score.score}</td>
                 <td>${score.player_name}</td>
-                <td>${score.country}</td>
+                <td>${score.country ? score.country : "-"}</td>
             </tr>`;
     }
 

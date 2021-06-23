@@ -125,21 +125,12 @@ async function createHighscoresTable(containerElement) {
     // after every <tr>, since it returns an array.
     let highscoresData = "";
     for (const score of highscores) {
-<<<<<<< HEAD
         highscoresData += `
             <tr>
                 <td>${score.score}</td>
                 <td>${score.player_name}</td>
                 <td>${score.country}</td>
             </tr>`;
-=======
-        const values = `
-            <td>${score.score}</td>
-            <td>${score.player_name}</td>
-            <td>${score.country}</td>`;
-
-        highscoresData += `<tr>${values}</tr>`;
->>>>>>> 7c88f23e33077739dec0080933cd83381bfc3d28
     }
 
     scoresContainer.innerHTML = headers;

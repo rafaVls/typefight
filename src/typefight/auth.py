@@ -50,7 +50,7 @@ def register():
         flash(error)
         cur.close()
     
-    return render_template("auth.html")
+    return render_template("auth.html", action="login")
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
@@ -81,7 +81,7 @@ def login():
         
         flash(error)
     
-    return render_template("auth.html")
+    return render_template("auth.html", action="register")
 
 bp.route("/logout")
 def logout():

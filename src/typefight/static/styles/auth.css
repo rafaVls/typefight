@@ -49,3 +49,8 @@ div.grid-container > div.buttons {
 
     background-color: var(--color-bg-light);
 }
+
+/* This is when user visits /auth/login */
+div.grid-container.login > div.buttons {
+    grid-column: 2 / 4;
+}

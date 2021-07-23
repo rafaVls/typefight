@@ -5,19 +5,19 @@ const loginBtn = document.getElementById("login-btn");
 const loginForm = document.getElementById("login");
 
 function login() {
+    buttonsContainer.style.transform = "translateX(40vw)";
+
     registerBtn.classList.remove("hidden");
     registerForm.classList.add("hidden");
     loginForm.classList.remove("hidden");
     loginBtn.classList.add("hidden");
-
-    buttonsContainer.style.gridColumn = "2 / 4";
 }
 
 function register() {
+    buttonsContainer.style.transform = "translateX(0)";
+
     registerForm.classList.remove("hidden");
     registerBtn.classList.add("hidden");
     loginBtn.classList.remove("hidden");
     loginForm.classList.add("hidden");
-
-    buttonsContainer.style.gridColumn = "1 / 3";
 }

@@ -77,7 +77,7 @@ def login():
             session.clear()
             # if login was successful, store the user's id in a cookie for future requests
             session["player_uid"] = player["player_uid"]
-            return redirect(url_for("index"))
+            return redirect(url_for("game.index"))
         
         flash(error)
     

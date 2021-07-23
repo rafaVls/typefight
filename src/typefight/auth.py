@@ -9,6 +9,10 @@ import secrets
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
+@bp.route("/", methods=["GET"])
+def auth():
+    return render_template("auth.html")
+    
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     # when method is POST, user is sending the register form

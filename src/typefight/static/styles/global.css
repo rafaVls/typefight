@@ -53,7 +53,7 @@ mark, .highlight {
     background-color: transparent;
 }
 
-button {
+button, input[type="submit"] {
     cursor: pointer;
 }
 

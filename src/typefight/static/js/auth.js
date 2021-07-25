@@ -4,20 +4,21 @@ const registerForm = document.getElementById("register");
 const loginBtn = document.getElementById("login-btn");
 const loginForm = document.getElementById("login");
 
-function login() {
-    buttonsContainer.style.transform = "translateX(40vw)";
+function switchForm(buttonElement, toLogin = true) {
+    const translateXAmount = toLogin ? "40vw" : "0";
+    buttonsContainer.style.transform = `translateX(${translateXAmount})`;
 
-    registerBtn.classList.remove("hidden");
-    registerForm.classList.add("hidden");
-    loginForm.classList.remove("hidden");
-    loginBtn.classList.add("hidden");
-}
+    if (buttonElement.value === "login") {
+        loginForm.classList.toggle("hidden");
+    } else if (buttonElement.value === "register") {
+        registerForm.classList.toggle("hidden");
+    }
 
-function register() {
-    buttonsContainer.style.transform = "translateX(0)";
+    // Timeout so the form isn't hidden immediately. Makes the transition smoother
+    setTimeout(() => {
+        registerBtn.classList.toggle("hidden");
+        loginBtn.classList.toggle("hidden");
 
-    registerForm.classList.remove("hidden");
-    registerBtn.classList.add("hidden");
-    loginBtn.classList.remove("hidden");
-    loginForm.classList.add("hidden");
+        toLogin ? registerForm.classList.toggle("hidden") : loginForm.classList.toggle("hidden");
+    }, 200);
 }

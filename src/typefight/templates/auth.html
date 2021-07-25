@@ -286,8 +286,8 @@
         </form>
 
         <div class="buttons" id="buttons-container">
-            <button id="login-btn" class="box auth-box big-box" onclick="login()">Login</button>
-            <button id="register-btn" class="box auth-box big-box accent hidden" onclick="register()">Register</button>
+            <button id="login-btn" value="login" class="box auth-box big-box" onclick="switchForm(this)">Login</button>
+            <button id="register-btn" value="register" class="box auth-box big-box accent hidden" onclick="switchForm(this, false)">Register</button>
         </div>
     </div>
 {% endblock %}

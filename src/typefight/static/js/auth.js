@@ -37,15 +37,25 @@ function toggleClasses(buttonValue) {
     const loginValue = buttonValue === "login";
     const registerValue = buttonValue === "register";
 
-    loginValue && loginForm.classList.toggle(className);
-    registerValue && registerForm.classList.toggle(className);
+    loginValue && toggleClass(loginForm);
+    registerValue && toggleClass(registerForm);
 
     // Timeout so the form isn't hidden immediately. Makes the transition smoother
     setTimeout(() => {
-        registerBtn.classList.toggle(className);
-        loginBtn.classList.toggle(className);
+        toggleClass(registerBtn);
+        toggleClass(loginBtn);
 
-        loginValue && registerForm.classList.toggle(className);
-        registerValue && loginForm.classList.toggle(className);
+        loginValue && toggleClass(registerForm);
+        registerValue && toggleClass(loginForm);
     }, 200);
+}
+
+/**
+ * Toggles className from element's classList, removing it if it's present,
+ * adding it if it's not.
+ * @param {HTMLElement} element The element which class we want to toggle.
+ * @param {string} className The class name or value which we want to toggle on/off. Default = "hidden"
+ */
+function toggleClass(element, className = "hidden") {
+    element.classList.toggle(className);
 }

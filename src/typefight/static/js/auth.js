@@ -4,24 +4,15 @@ const registerForm = document.getElementById("register");
 const loginBtn = document.getElementById("login-btn");
 const loginForm = document.getElementById("login");
 
-function switchForm(buttonElement, toLogin = true) {
+/**
+ * Handles switching from the "login" form to the "register" form and vice-versa.
+ * @param {HTMLButtonElement} buttonElement The button element that's calling this function.
+ */
+function switchForm(buttonElement) {
     const buttonValue = buttonElement.value;
 
     buttonsContainer.style.transform = `translateX(${getTranslateAmount(buttonValue)})`;
-
-    if (buttonElement.value === "login") {
-        loginForm.classList.toggle("hidden");
-    } else if (buttonElement.value === "register") {
-        registerForm.classList.toggle("hidden");
-    }
-
-    // Timeout so the form isn't hidden immediately. Makes the transition smoother
-    setTimeout(() => {
-        registerBtn.classList.toggle("hidden");
-        loginBtn.classList.toggle("hidden");
-
-        toLogin ? registerForm.classList.toggle("hidden") : loginForm.classList.toggle("hidden");
-    }, 200);
+    toggleClasses(buttonValue);
 }
 
 /**
@@ -35,4 +26,26 @@ function getTranslateAmount(buttonValue) {
     } else if (buttonValue === "register") {
         return "0";
     }
+}
+
+/**
+ * Determine which elements' classes will be "toggled", depending on buttonValue.
+ * @param {string} buttonValue The button element's value attribute.
+ */
+function toggleClasses(buttonValue) {
+    const className = "hidden";
+    const loginValue = buttonValue === "login";
+    const registerValue = buttonValue === "register";
+
+    loginValue && loginForm.classList.toggle(className);
+    registerValue && registerForm.classList.toggle(className);
+
+    // Timeout so the form isn't hidden immediately. Makes the transition smoother
+    setTimeout(() => {
+        registerBtn.classList.toggle(className);
+        loginBtn.classList.toggle(className);
+
+        loginValue && registerForm.classList.toggle(className);
+        registerValue && loginForm.classList.toggle(className);
+    }, 200);
 }

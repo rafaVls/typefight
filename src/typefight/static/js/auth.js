@@ -5,8 +5,9 @@ const loginBtn = document.getElementById("login-btn");
 const loginForm = document.getElementById("login");
 
 function switchForm(buttonElement, toLogin = true) {
-    const translateXAmount = toLogin ? "40vw" : "0";
-    buttonsContainer.style.transform = `translateX(${translateXAmount})`;
+    const buttonValue = buttonElement.value;
+
+    buttonsContainer.style.transform = `translateX(${getTranslateAmount(buttonValue)})`;
 
     if (buttonElement.value === "login") {
         loginForm.classList.toggle("hidden");
@@ -21,4 +22,17 @@ function switchForm(buttonElement, toLogin = true) {
 
         toLogin ? registerForm.classList.toggle("hidden") : loginForm.classList.toggle("hidden");
     }, 200);
+}
+
+/**
+ * Determines the value to be used in a translate CSS function, depending on which button is being clicked.
+ * @param {string} buttonValue The button element's value attribute.
+ * @returns The value that will be used in a translate CSS function.
+ */
+function getTranslateAmount(buttonValue) {
+    if (buttonValue === "login") {
+        return "40vw";
+    } else if (buttonValue === "register") {
+        return "0";
+    }
 }

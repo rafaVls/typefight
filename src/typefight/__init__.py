@@ -3,15 +3,10 @@ import os
 from flask import Flask
 from . import auth, db, game
 
-def create_app():
+def create_app(config_filename="flask.cfg"):
     app = Flask(__name__, instance_relative_config=True)
-    SECRET_KEY = os.environ.get("FLASK_SECRET_KEY")
 
-    if not SECRET_KEY:
-        raise ValueError("No SECRET_KEY set for Flask application")
-
-    app.config["SECRET_KEY"] = SECRET_KEY
-
+    app.config.from_pyfile(config_filename)
     app.register_blueprint(auth.bp)
     app.register_blueprint(game.bp)
     

@@ -1,15 +1,13 @@
-import os
-
-from flask import g
+from flask import current_app, g
 import psycopg2
 
 def get_db():
     if "db" not in g:
         g.db = psycopg2.connect(
-            user=os.environ["DB_USER"],
-            database=os.environ["DB_NAME"],
-            password=os.environ["DB_PASSWORD"],
-            host=os.environ["FLASK_RUN_HOST"]
+            user=current_app.config["DB_USER"],
+            database=current_app.config["DB_NAME"],
+            password=current_app.config["DB_PASSWORD"],
+            host=current_app.config["DB_HOST"]
         )
     return g.db
 

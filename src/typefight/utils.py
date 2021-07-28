@@ -8,9 +8,15 @@ def make_serializable(data:list) -> list:
 
     serialized_list = []
 
+    # raw_row is a table row from the db. It's a RealDictRow object that looks like:
+    # raw_row["country"] = "Mexico" and raw_row["score"] = Decimal("12.53")
     for raw_row in data:
+        # processed_row is a table row as a dictionary that looks like:
+        # processed_row = {"score": 12.53, 'player_name': 'rafa_vls', 'country': 'Mexico'}
         processed_row = {}
 
+        # column_value is the column title of the db table. 
+        # e.g. "country", "player_name" and "score"
         for column_value in raw_row:
             processed_row[column_value] = decimal_type_handler(raw_row[column_value])
 

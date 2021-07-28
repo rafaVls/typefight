@@ -1,5 +1,4 @@
 from decimal import Decimal
-from typing import OrderedDict
 from typefight.utils import decimal_type_handler, make_serializable
 
 class TestDecimalHandler:
@@ -39,42 +38,18 @@ class TestMakeSerializable:
     """
     All tests related to make_serializable
     """
-    def test_use_case(self):
+    def test_use_case(self, highscores_data, serialized_data):
         """
-        GIVEN a list of items that could be non-serializable
-        WHEN the list needs to be serializable
+        GIVEN a list of highscore records with scores that could be non-serializable
+        WHEN the list needs to be fully serializable
         THEN we return a list of json-serializable items
         """
-        data = [
-            OrderedDict([
-                ('score', Decimal('12.53')), 
-                ('player_name', 'rafa_vls'), 
-                ('country', 'Mexico')
-            ]),
-            OrderedDict([
-                ('score', Decimal(8.90)), 
-                ('player_name', 'rafa_vls'), 
-                ('country', 'Mexico')
-            ])
-        ]
-
-        assert make_serializable(data) == [
-            {
-                "country": "Mexico",
-                "player_name": "rafa_vls",
-                "score": 12.53
-            },
-            {
-                "country": "Mexico",
-                "player_name": "rafa_vls",
-                "score": 8.9
-            }
-        ]
+        assert make_serializable(highscores_data) == serialized_data
 
     def test_empty_list(self):
         """
-        GIVEN an empty list (which is the case if there's no records)
-        WHEN the list needs to be serializable
+        GIVEN a list of highscore records
+        WHEN the list is empty (there are no records yet)
         THEN we return an empty list
         """
 

@@ -1,5 +1,6 @@
 from decimal import Decimal
 from typing import OrderedDict
+from typefight import create_app
 import pytest
 
 # */ ==========[ Unit test fixtures ]========== */
@@ -46,3 +47,18 @@ def serialized_data():
     ]
 
     return data
+
+# */ ==========[ Functional test fixtures ]========== */
+@pytest.fixture(scope="class")
+def flask_app():
+    # Create a test client using the Flask application configured for testing
+    flask_app = create_app("flask_test.cfg")
+
+    return flask_app
+
+@pytest.fixture(scope="class")
+def test_client(flask_app):
+    with flask_app.test_client() as testing_client:
+        # Establish an application context
+        with flask_app.app_context():
+            yield testing_client # this is where the testing happens

@@ -45,6 +45,20 @@ class TestMakeSerializable:
         THEN we return a list of json-serializable items
         """
         assert make_serializable(highscores_data) == serialized_data
+        
+    def test_user_without_country(self, highscores_data, serialized_data):
+        """
+        GIVEN a list of highscore records
+        WHEN some users didn't specify a country
+        THEN we return a serialized list with the country as None
+        """
+        highscores_data[0]["country"] = None
+        highscores_data[2]["country"] = None
+
+        serialized_data[0]["country"] = None
+        serialized_data[2]["country"] = None
+
+        assert make_serializable(highscores_data) == serialized_data
 
     def test_empty_list(self):
         """

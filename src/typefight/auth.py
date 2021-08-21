@@ -9,7 +9,7 @@ import secrets
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
-@bp.route("/", methods=["GET"])
+@bp.route("/")
 def auth():
     return render_template("auth.html")
 
@@ -48,10 +48,11 @@ def register():
             """, (player_name, country, salt, generate_password_hash(pass_salt))
         )
         db.commit()
-        return redirect(url_for("auth.login"))
+        return redirect(url_for("auth.auth"))
 
-    flash(error)
     cur.close()
+    flash(error)
+    return render_template("auth.html")
     
 @bp.route("/login", methods=["POST"])
 def login():
@@ -76,12 +77,30 @@ def login():
     if error is None:
         session.clear()
         # if login was successful, store the user's id in a cookie for future requests
+        #TODO CHANGE THIS TO A UNIQUE HASH INSTEAD OF player_uid
         session["player_uid"] = player["player_uid"]
         return redirect(url_for("game.index"))
     
     flash(error)
-    
-bp.route("/logout")
+    return render_template("auth.html")
+
+@bp.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for("auth.login"))
+    return redirect(url_for("game.index"))
+
+@bp.before_app_request
+def load_logged_in_user():
+    player_uid = session.get("player_uid")
+
+    if player_uid is None:
+        g.user = None
+    else:
+        with get_db() as db:
+            with db.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(
+                    "SELECT player_name, country FROM players WHERE player_uid = %s", 
+                    (player_uid, )
+                    )
+                g.user = cur.fetchone()
+                cur.close()

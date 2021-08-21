@@ -62,3 +62,30 @@ def test_client(flask_app):
         # Establish an application context
         with flask_app.app_context():
             yield testing_client # this is where the testing happens
+
+@pytest.fixture()
+def register_response(test_client, user_info={"username": "a", "password": "a", "country": "a"}):
+    response = test_client.post(
+        "/auth/register",
+        data={
+            "username": user_info["username"],
+            "password": user_info["password"],
+            "country": user_info["country"]
+        },
+        follow_redirects=True
+    )
+
+    return response
+
+@pytest.fixture()
+def login_response(test_client, user_info={"username": "test", "password": "test"}):
+    response = test_client.post(
+        "/auth/login",
+        data={
+            "username": user_info["username"], 
+            "password": user_info["password"]
+            },
+        follow_redirects=True
+        )
+
+    return response

@@ -5,7 +5,10 @@ from flask import (
 from werkzeug.security import check_password_hash, generate_password_hash
 from psycopg2.extras import RealDictCursor
 from typefight.db import get_db
+from typefight.utils import validate_country
+# from datetime import datetime
 import secrets
+# import hashlib
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -18,7 +21,7 @@ def register():
     # when method is POST, user is sending the register form
     player_name = request.form["username"]
     password = request.form["password"]
-    country = request.form["country"] if request.form["country"] != "" else None
+    country = validate_country(request.form["country"])
     salt = secrets.token_hex(8)
     pass_salt = password + salt
 
@@ -78,6 +81,15 @@ def login():
         session.clear()
         # if login was successful, store the user's id in a cookie for future requests
         #TODO CHANGE THIS TO A UNIQUE HASH INSTEAD OF player_uid
+        #NOTE to create a SHA512, I'll use the hashlib module
+        # I'll combine the user's id with the time of request and the user name
+        # see http://oliviertech.com/python/generate-SHA512-hash-from-a-String/
+        # & https://www.programiz.com/python-programming/datetime/current-time
+        # now = datetime.now().strftime("%H%M%S")
+        # like this:
+        # session_hash = hashlib.sha512(str(player["player_name"] + now).encode("utf-8")).hexdigest()
+        # session["session_hash"] = session_hash
+
         session["player_uid"] = player["player_uid"]
         return redirect(url_for("game.index"))
     

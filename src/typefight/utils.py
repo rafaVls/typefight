@@ -1,3 +1,4 @@
+import os, json
 from decimal import Decimal
 
 def make_serializable(data:list) -> list:
@@ -34,3 +35,32 @@ def decimal_type_handler(object_to_check):
         return float(object_to_check)
 
     return object_to_check
+
+def get_countries_path() -> str:
+    return os.path.join(
+        os.path.dirname(__file__), 
+        "static", 
+        "countries.json"
+        )
+
+def get_countries_list(filepath: str) -> list:
+    try:
+        with open(filepath, "r") as f:
+            countries = json.loads(f.read())
+            f.close()
+        return countries
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File ${filepath} not found")
+
+def validate_country(input: str):
+    """
+    Checks if country exists in country's input options,
+    if it does, return country string, else return None.
+    """
+    countries_filepath = get_countries_path()
+    countries = get_countries_list(countries_filepath)
+
+    if input in countries:
+        return input
+    else:
+        return None

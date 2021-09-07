@@ -81,7 +81,7 @@ class TestLogin:
         """
         assert login_response.status_code == 200
         assert b"Typefight!" in login_response.data # route redirects to index.html if data is correct
-        assert session["player_uid"] == "15be17e0-d6d4-4de4-8480-fd521eeef67d"
+        assert session["player_uid"] == "bff618f7-9aaa-43a5-9e1a-1b151bd5882f"
 
         # making sure we're logged in
         new_response = test_client.get("/")

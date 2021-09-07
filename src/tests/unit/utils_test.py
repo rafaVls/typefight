@@ -1,5 +1,7 @@
 from decimal import Decimal
-from typefight.utils import decimal_type_handler, make_serializable
+from typefight.utils import (
+    decimal_type_handler, make_serializable, validate_country
+)
 
 class TestDecimalHandler:
     """
@@ -69,3 +71,14 @@ class TestMakeSerializable:
 
         data = []
         assert make_serializable(data) == []
+
+class TestValidateCountry:
+    """
+    All tests related to validate_country
+    """
+    def test_use_case(self):
+        assert validate_country("Viet Nam") == "Viet Nam"
+        assert validate_country("Mexico") == "Mexico"
+        assert validate_country("Congo") == "Congo"
+        assert validate_country(None) == None
+        assert validate_country({}) == None

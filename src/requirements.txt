@@ -1,3 +1,19 @@
-flask
-python-dotenv
-psycopg2-binary
+attrs==21.2.0
+click==8.0.1
+coverage==5.5
+Flask==2.0.1
+iniconfig==1.1.1
+itsdangerous==2.0.1
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+packaging==21.0
+pluggy==1.0.0
+psycopg2-binary==2.9.1
+py==1.10.0
+pyparsing==2.4.7
+pytest==6.2.5
+pytest-cov==2.12.1
+python-dotenv==0.19.0
+toml==0.10.2
+-e git+git@github.com:rafaVls/typefight.git@331081c7f4715cee1a4c54131f999055fb5478d3#egg=typefight&subdirectory=src
+Werkzeug==2.0.1

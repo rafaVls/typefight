@@ -7,6 +7,7 @@ from psycopg2.extras import RealDictCursor
 from typefight.db import get_db
 from typefight.utils import validate_country
 # from datetime import datetime
+import functools
 import secrets
 # import hashlib
 
@@ -18,7 +19,6 @@ def auth():
 
 @bp.route("/register", methods=["POST"])
 def register():
-    # when method is POST, user is sending the register form
     player_name = request.form["username"]
     password = request.form["password"]
     country = validate_country(request.form["country"])
@@ -33,6 +33,8 @@ def register():
         error = "Username is required."
     elif not password:
         error = "Password is required."
+    elif not country:
+        error = "Not a valid country."
     else:
         cur.execute(
             "SELECT player_uid FROM players WHERE player_name = %s;", (player_name,)
@@ -116,3 +118,15 @@ def load_logged_in_user():
                     )
                 g.user = cur.fetchone()
                 cur.close()
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+
+        if g.user is not None:
+           return view(**kwargs)
+        else:
+            #TODO redirect to a login page or something
+            return "You need to be logged in to access this content"
+
+    return wrapped_view

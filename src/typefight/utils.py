@@ -44,13 +44,16 @@ def get_countries_path() -> str:
         )
 
 def get_countries_list(filepath: str) -> list:
+    if not isinstance(filepath, str):
+        raise ValueError("Filepath must be a string")
+
     try:
         with open(filepath, "r") as f:
             countries = json.loads(f.read())
             f.close()
         return countries
     except FileNotFoundError:
-        raise FileNotFoundError(f"File ${filepath} not found")
+        raise FileNotFoundError(f"File {filepath} not found")
 
 def validate_country(input: str):
     """

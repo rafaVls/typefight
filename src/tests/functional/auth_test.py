@@ -33,7 +33,7 @@ class TestRegister:
     def test_register(self, register_response):
         """
         GIVEN the '/auth/register' is posted to (POST)
-        WHEN using valid credencials username: 'a', password: 'a', country: 'a'
+        WHEN using valid credencials username: 'a', password: 'a', country: 'Mexico'
         THEN check user got saved in db and we got redirected to '/auth'
         """
         assert register_response.status_code == 200
@@ -50,6 +50,7 @@ class TestRegister:
             cur.execute(
                 "DELETE FROM players WHERE player_name = 'a';"
             )
+            cur.close()
             db.commit()
 
     @pytest.mark.parametrize(("username", "password", "country", "message"), (
@@ -59,7 +60,7 @@ class TestRegister:
     ))
     def test_register_validate_input(self, test_client, username, password, country, message):
         """
-        GIVEN the '/auth/register' is posted to (POST)
+        GIVEN the '/auth/register' route is posted to (POST)
         WHEN using three sets of invalid credentials
         THEN check we get the correct error message
         """

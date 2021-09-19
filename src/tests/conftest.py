@@ -64,7 +64,7 @@ def test_client(flask_app):
             yield testing_client # this is where the testing happens
 
 @pytest.fixture()
-def register_response(test_client, user_info={"username": "a", "password": "a", "country": "a"}):
+def register_response(test_client, user_info={"username": "a", "password": "a", "country": "Mexico"}):
     response = test_client.post(
         "/auth/register",
         data={

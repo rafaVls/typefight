@@ -33,8 +33,6 @@ def register():
         error = "Username is required."
     elif not password:
         error = "Password is required."
-    elif not country:
-        error = "Not a valid country."
     else:
         cur.execute(
             "SELECT player_uid FROM players WHERE player_name = %s;", (player_name,)

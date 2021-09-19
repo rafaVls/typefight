@@ -1,6 +1,7 @@
 from decimal import Decimal
+import pytest
 from typefight.utils import (
-    decimal_type_handler, make_serializable, validate_country
+    decimal_type_handler, get_countries_list, make_serializable, validate_country
 )
 
 class TestDecimalHandler:
@@ -80,5 +81,24 @@ class TestValidateCountry:
         assert validate_country("Viet Nam") == "Viet Nam"
         assert validate_country("Mexico") == "Mexico"
         assert validate_country("Congo") == "Congo"
+        assert validate_country("") == None
+
+    def test_wrong_input(self):
         assert validate_country(None) == None
         assert validate_country({}) == None
+
+class TestCountriesList:
+    """
+    All tests related to get_countries_list
+    """
+    def test_use_case(self):
+        with pytest.raises(FileNotFoundError) as e:
+            get_countries_list("/wrong/path")
+
+        assert str(e.value) == "File /wrong/path not found"
+
+    def test_wrong_input(self):
+        with pytest.raises(ValueError) as e:
+            get_countries_list(True)
+
+        assert str(e.value) == "Filepath must be a string"

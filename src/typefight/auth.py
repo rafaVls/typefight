@@ -35,7 +35,11 @@ def register():
         error = "Password is required."
     else:
         cur.execute(
-            "SELECT player_uid FROM players WHERE player_name = %s;", (player_name,)
+            """
+            SELECT player_uid 
+            FROM players 
+            WHERE player_name = %s;
+            """, (player_name, )
         )
         # check if user already exists
         if cur.fetchone() is not None:
@@ -47,7 +51,7 @@ def register():
         cur.execute(
             """
             INSERT INTO players(player_uid, player_name, country, salt, pass_hash) 
-            VALUES(uuid_generate_v4(), %s, %s, %s, %s)
+            VALUES(uuid_generate_v4(), %s, %s, %s, %s);
             """, (player_name, country, salt, generate_password_hash(pass_salt))
         )
         db.commit()
@@ -67,7 +71,10 @@ def login():
     error = None
 
     cur.execute(
-        "SELECT * FROM players WHERE player_name = %s", (player_name,)
+        """SELECT * 
+        FROM players 
+        WHERE player_name = %s;
+        """, (player_name, )
     )
     player = cur.fetchone()
     cur.close()
@@ -111,8 +118,11 @@ def load_logged_in_user():
         with get_db() as db:
             with db.cursor(cursor_factory=RealDictCursor) as cur:
                 cur.execute(
-                    "SELECT player_name, country FROM players WHERE player_uid = %s", 
-                    (player_uid, )
+                    """
+                    SELECT player_name, country 
+                    FROM players 
+                    WHERE player_uid = %s;
+                    """, (player_uid, )
                     )
                 g.user = cur.fetchone()
                 cur.close()

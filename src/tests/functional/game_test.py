@@ -17,7 +17,10 @@ class TestHomePage:
         assert response.headers.get("Content-Type") == "text/html; charset=utf-8"
 
         assert b"Typefight!" in response.data
-        assert b"Compete against players around the world to see who's the fastest typist!" in response.data
+        assert (
+            b"Compete against players around the world to see who's the fastest typist!" 
+            in response.data
+        )
 
     def test_bad_request(self, test_client):
         """
@@ -115,7 +118,7 @@ class TestSetHighscore:
                 """
                 DELETE FROM scores
                 WHERE player_uid = %s
-                AND quote_uid = %s
+                AND quote_uid = %s;
                 """, (session["player_uid"], session["quote"]["quote_id"])
             )
             cur.close()
@@ -147,8 +150,8 @@ class TestSetHighscore:
                 """
                 UPDATE scores
                 SET score = 13.37
-                WHERE player_uid = %s
-                """, (session["player_uid"],)
+                WHERE player_uid = %s;
+                """, (session["player_uid"], )
             )
             db.commit()
             cur.close()

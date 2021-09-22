@@ -44,11 +44,18 @@ class TestRegister:
         with g.db as db:
             cur = db.cursor()
             cur.execute(
-                "SELECT * FROM players WHERE player_name = 'a';"
+                """
+                SELECT * 
+                FROM players 
+                WHERE player_name = 'a';
+                """
             )
             assert cur.fetchone() is not None
             cur.execute(
-                "DELETE FROM players WHERE player_name = 'a';"
+                """
+                DELETE FROM players 
+                WHERE player_name = 'a';
+                """
             )
             cur.close()
             db.commit()

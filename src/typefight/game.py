@@ -31,8 +31,7 @@ def get_highscores():
             LEFT JOIN players
             ON players.player_uid = scores.player_uid
             WHERE scores.quote_uid = %s;
-            """,
-            (quote_id,)
+            """, (quote_id, )
         )
         scores_table = cur.fetchall()
 
@@ -65,8 +64,7 @@ def set_highscore(score):
             SELECT player_uid
             FROM players
             WHERE player_name = %s;
-            """,
-            (player_name, )
+            """, (player_name, )
         )
         player_uid = cur.fetchone()["player_uid"]
 
@@ -79,8 +77,7 @@ def set_highscore(score):
                 ON players.player_uid = scores.player_uid
                 WHERE player_name = %s
                 AND quote_uid = %s;
-                """,
-                (player_name, quote_id)
+                """, (player_name, quote_id)
             )
             existing_score = cur.fetchone()
         
@@ -94,8 +91,7 @@ def set_highscore(score):
                 """
                 INSERT INTO scores(player_uid, quote_uid, score)
                 VALUES (%s, %s, %s);
-                """,
-                (player_uid, quote_id, score)
+                """, (player_uid, quote_id, score)
             )
             db.commit()
 
@@ -109,8 +105,7 @@ def set_highscore(score):
                 SET score = %s
                 WHERE player_uid = %s
                 AND quote_uid = %s;
-                """,
-                (score, player_uid, quote_id)
+                """, (score, player_uid, quote_id)
             )
             db.commit()
 

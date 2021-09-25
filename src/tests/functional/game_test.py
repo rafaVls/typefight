@@ -114,12 +114,22 @@ class TestSetHighscore:
 
         with g.db as db:
             cur = db.cursor()
+
+            cur.execute(
+                """
+                SELECT player_uid
+                FROM players
+                WHERE player_name = %s;
+                """, (g.user["player_name"], )
+            )
+            player_uid = cur.fetchone()
+
             cur.execute(
                 """
                 DELETE FROM scores
                 WHERE player_uid = %s
                 AND quote_uid = %s;
-                """, (session["player_uid"], session["quote"]["quote_id"])
+                """, (player_uid, session["quote"]["quote_id"])
             )
             cur.close()
 
@@ -146,12 +156,22 @@ class TestSetHighscore:
         # resetting the score
         with g.db as db:
             cur = db.cursor()
+
+            cur.execute(
+                """
+                SELECT player_uid
+                FROM players
+                WHERE player_name = %s;
+                """, (g.user["player_name"], )
+            )
+            player_uid = cur.fetchone()
+
             cur.execute(
                 """
                 UPDATE scores
                 SET score = 13.37
                 WHERE player_uid = %s;
-                """, (session["player_uid"], )
+                """, (player_uid, )
             )
             db.commit()
             cur.close()

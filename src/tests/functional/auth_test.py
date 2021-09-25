@@ -85,11 +85,11 @@ class TestLogin:
         """
         GIVEN the '/auth/login' is posted to (POST)
         WHEN using valid credencials username: 'test', password: 'test'
-        THEN check we get redirected to '/', and player_uid is saved in 'g' and session
+        THEN check we get redirected to '/', and player is saved in 'g'
         """
         assert login_response.status_code == 200
         assert b"Typefight!" in login_response.data # route redirects to index.html if data is correct
-        assert session["player_uid"] == "bff618f7-9aaa-43a5-9e1a-1b151bd5882f"
+        assert session["session_hash"]
 
         # making sure we're logged in
         new_response = test_client.get("/")
@@ -136,7 +136,7 @@ class TestLogout:
 
         assert b"Typefight!" in logout_response.data
         assert logout_response.status_code == 200
-        assert not "player_uid" in session
+        assert not "session_hash" in session
 
         # making sure we're logged out
         home_response = test_client.get("/")

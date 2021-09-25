@@ -25,6 +25,16 @@
     font-family: var(--font-regular);
 }
 
+.hero-screen-grid > nav > p {
+    font-size: 1.6rem;
+    color: var(--color-text-light);
+}
+
+.hero-screen-grid > nav > p > mark {
+  text-decoration: underline;
+  text-underline-offset: 0.4rem;
+}
+
 .hero-screen-grid > h1 {
     grid-row: 2 / 3;
     grid-column: 2 / 3;

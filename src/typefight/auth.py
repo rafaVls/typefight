@@ -6,10 +6,11 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from psycopg2.extras import RealDictCursor
 from typefight.db import get_db
 from typefight.utils import validate_country
-# from datetime import datetime
+from datetime import datetime
+
 import functools
 import secrets
-# import hashlib
+import hashlib
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
@@ -71,7 +72,8 @@ def login():
     error = None
 
     cur.execute(
-        """SELECT * 
+        """
+        SELECT * 
         FROM players 
         WHERE player_name = %s;
         """, (player_name, )
@@ -86,18 +88,50 @@ def login():
     
     if error is None:
         session.clear()
-        # if login was successful, store the user's id in a cookie for future requests
-        #TODO CHANGE THIS TO A UNIQUE HASH INSTEAD OF player_uid
-        #NOTE to create a SHA512, I'll use the hashlib module
-        # I'll combine the user's id with the time of request and the user name
-        # see http://oliviertech.com/python/generate-SHA512-hash-from-a-String/
-        # & https://www.programiz.com/python-programming/datetime/current-time
-        # now = datetime.now().strftime("%H%M%S")
-        # like this:
-        # session_hash = hashlib.sha512(str(player["player_name"] + now).encode("utf-8")).hexdigest()
-        # session["session_hash"] = session_hash
 
-        session["player_uid"] = player["player_uid"]
+        # if login was successful, store the session hash in session for future requests
+        now = datetime.now().strftime("%H%M%S")
+        encoded_str = str(player["player_name"] + now).encode("utf-8")
+
+        session_hash = hashlib.sha512(encoded_str).hexdigest()
+
+        cur = db.cursor()
+        try:
+            cur.execute(
+                """
+                SELECT session_hash
+                FROM sessions
+                WHERE player_uid = %s;
+                """, (player["player_uid"], )
+            )
+            existing_session = cur.fetchone()
+
+            if existing_session is None:
+                cur.execute(
+                    """
+                    INSERT INTO sessions(session_hash, player_uid)
+                    VALUES(%s, %s);
+                    """, (session_hash, player["player_uid"])
+                )
+                db.commit()
+            else:
+                cur.execute(
+                    """
+                    UPDATE sessions
+                    SET session_hash = %s,
+                        login_date = NOW()
+                    WHERE player_uid = %s;
+                    """, (session_hash, player["player_uid"])
+                )
+                db.commit()
+
+        except Exception as e:
+            print(f"An exception has occured during {request}:", e)
+            print("Exception TYPE: ", type(e))
+
+        cur.close()
+
+        session["session_hash"] = session_hash
         return redirect(url_for("game.index"))
     
     flash(error)
@@ -105,18 +139,40 @@ def login():
 
 @bp.route("/logout")
 def logout():
+    session_hash = session.get("session_hash")
     session.clear()
+
+    with get_db() as db:
+        with db.cursor() as cur:
+            cur.execute(
+                """
+                DELETE FROM sessions
+                WHERE session_hash = %s;
+                """, (session_hash, )
+            )
+            db.commit()
+            cur.close()
+
     return redirect(url_for("game.index"))
 
 @bp.before_app_request
 def load_logged_in_user():
-    player_uid = session.get("player_uid")
+    session_hash = session.get("session_hash")
 
-    if player_uid is None:
+    if session_hash is None:
         g.user = None
     else:
         with get_db() as db:
             with db.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(
+                    """
+                    SELECT player_uid
+                    FROM sessions
+                    WHERE session_hash = %s;
+                    """, (session_hash, )
+                )
+                player_uid = cur.fetchone()["player_uid"]
+
                 cur.execute(
                     """
                     SELECT player_name, country 

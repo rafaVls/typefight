@@ -66,6 +66,14 @@ function resetGame() {
   startBtn.innerText = "Start";
   startBtn.focus();
 
+  quoteElement.style.display = "block";
+  typedValueContainerElement.style.display = "block";
+
+  const highscoresContainer = document.querySelector(".highscores-container");
+  if (highscoresContainer) {
+    highscoresContainer.remove();
+  }
+
   seconds = 0;
   minutes = 0;
   start = 0;
@@ -99,9 +107,9 @@ async function finishGame() {
 
   createHighscoresTable(game);
 
-  startBtn.remove();
-  quoteElement.remove();
-  typedValueContainerElement.remove();
+  // startBtn.addEventListener(click, listener)
+  quoteElement.style.display = "none";
+  typedValueContainerElement.style.display = "none";
 
   timer.style.color = styles.getPropertyValue("--color-text-accent");
   typedValueElement.removeEventListener("input", gameManager);

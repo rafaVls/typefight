@@ -14,8 +14,15 @@ CREATE TABLE IF NOT EXISTS quotes(
 );
 
 CREATE TABLE IF NOT EXISTS scores(
-player_uid UUID REFERENCES players(player_uid) ON DELETE CASCADE,
-quote_uid UUID REFERENCES quotes(quote_uid) ON DELETE CASCADE,
-score NUMERIC(6,2) NOT NULL CHECK(score > 0),
-PRIMARY KEY(player_uid, quote_uid)
+    player_uid UUID REFERENCES players(player_uid) ON DELETE CASCADE,
+    quote_uid UUID REFERENCES quotes(quote_uid) ON DELETE CASCADE,
+    score NUMERIC(6,2) NOT NULL CHECK(score > 0),
+    PRIMARY KEY(player_uid, quote_uid)
+);
+
+CREATE TABLE IF NOT EXISTS sessions(
+    player_uid UUID REFERENCES players(player_uid) ON DELETE CASCADE PRIMARY KEY,
+    session_hash CHAR(128) NOT NULL,
+    login_date TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE(session_hash)
 );

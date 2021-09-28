@@ -4,10 +4,12 @@ from flask import (
 
 from werkzeug.security import check_password_hash, generate_password_hash
 from psycopg2.extras import RealDictCursor
+
 from typefight.db import get_db
-from typefight.utils import validate_country
+import typefight.forms as forms
 from datetime import datetime
 
+import contextlib
 import functools
 import secrets
 import hashlib
@@ -18,49 +20,30 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 def auth():
     return render_template("auth.html")
 
-@bp.route("/register", methods=["POST"])
+@bp.route("/register", methods=["GET", "POST"])
 def register():
-    player_name = request.form["username"]
-    password = request.form["password"]
-    country = validate_country(request.form["country"])
-    salt = secrets.token_hex(8)
-    pass_salt = password + salt
-
-    db = get_db()
-    cur = db.cursor()
-    error = None
-
-    if not player_name:
-        error = "Username is required."
-    elif not password:
-        error = "Password is required."
-    else:
-        cur.execute(
-            """
-            SELECT player_uid 
-            FROM players 
-            WHERE player_name = %s;
-            """, (player_name, )
-        )
-        # check if user already exists
-        if cur.fetchone() is not None:
-            error = f"Player name {player_name} already exists."
+    form = forms.RegistrationForm(request.form)
     
-    # if all goes well, save user data into the database
-    # and redirect user to main page
-    if error is None:
-        cur.execute(
-            """
-            INSERT INTO players(player_uid, player_name, country, salt, pass_hash) 
-            VALUES(uuid_generate_v4(), %s, %s, %s, %s);
-            """, (player_name, country, salt, generate_password_hash(pass_salt))
-        )
-        db.commit()
+    if request.method == "POST" and form.validate():
+        player_name = form.username.data
+        password = form.password.data
+        country = form.country.data
+        salt = secrets.token_hex(8)
+        pass_salt = password + salt
+
+        db = get_db()
+        with contextlib.closing(db.cursor()) as cur:
+            cur.execute(
+                """
+                INSERT INTO players(player_uid, player_name, country, salt, pass_hash) 
+                VALUES(uuid_generate_v4(), %s, %s, %s, %s);
+                """, (player_name, country, salt, generate_password_hash(pass_salt))
+            )
+            db.commit()
+
         return redirect(url_for("auth.auth"))
 
-    cur.close()
-    flash(error)
-    return render_template("auth.html")
+    return render_template("auth.html", form=form)
     
 @bp.route("/login", methods=["POST"])
 def login():

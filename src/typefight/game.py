@@ -30,7 +30,8 @@ def get_highscores():
             FROM scores
             LEFT JOIN players
             ON players.player_uid = scores.player_uid
-            WHERE scores.quote_uid = %s;
+            WHERE scores.quote_uid = %s
+            ORDER BY scores.score;
             """, (quote_id, )
         )
         scores_table = cur.fetchall()

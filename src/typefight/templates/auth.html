@@ -10,28 +10,32 @@
     <div class="grid-container auth-grid">
         <form action="{{ url_for('auth.register') }}" method="POST" id="register">
             <div class="inputs">
-                {% if form %}
-                {{ render_field(form.username) }}
-                {{ render_field(form.password) }}
-                {{ render_field(form.confirm) }}
-                {{ render_field(form.country) }}
-                {% endif %}
+        {% with form = register_form %}
+            {{ render_field(form.username) }}
+            {{ render_field(form.password) }}
+            {{ render_field(form.confirm) }}
+            {{ render_field(form.country) }}
+        {% endwith %}
             </div>
             <input type="submit" value="Signup" class="box auth-box big-box accent">
         </form>
 
         <form action="{{ url_for('auth.login') }}" method="POST" id="login" class="hidden">
             <div class="inputs">
-                <label for="username-login">Username</label>
-                <input type="text" name="username" id="username-login" required>
-                <label for="password-login">Password</label>
-                <input type="password" name="password" id="password-login" required>
+        {% with form = login_form %}
+            {{ render_field(form.username) }}
+            {{ render_field(form.password) }}
+        {% endwith %}
             </div>
             <input type="submit" value="Login" class="box auth-box big-box">
         </form>
 
         <div class="buttons" id="buttons-container">
+            {% if login %}
+            <button id="login-btn" value="login" class="box auth-box big-box" data-login="">Login</button>
+            {% else %}
             <button id="login-btn" value="login" class="box auth-box big-box">Login</button>
+            {% endif %}
             <button id="register-btn" value="register" class="box auth-box big-box accent hidden">Register</button>
         </div>
     </div>

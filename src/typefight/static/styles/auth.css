@@ -14,7 +14,7 @@ div.grid-container > form:not(.hidden) {
     flex-direction: column;
     justify-content: space-between;
 
-    padding: 80px 70px 50px;
+    padding: 50px 70px 50px;
 
     background-color: var(--color-bg-dark);
 }
@@ -32,16 +32,30 @@ div.grid-container > form > div.inputs {
     flex-direction: column;
 }
 
+div.grid-container > form > div.inputs > label {
+    font-size: 2rem;
+}
 
 /* ==========[ INPUTS ]========== */
 div.grid-container > form > div.inputs > label:not(:first-of-type) {
-    margin-top: 50px;
+    margin-top: 45px;
 }
 
 div.grid-container > form > input[type="submit"] {
     align-self: center;
 }
 
+div.inputs > ul.errors {
+    list-style: none;
+    margin-top: 10px;
+    padding: 0 1rem;
+}
+
+ul.errors > li {
+    color: var(--color-text-accent);
+    font-family: var(--font-regular);
+    font-size: 1.4rem;
+}
 
 /* ==========[ LOGIN / SIGNUP BUTTONS ]========== */
 div.grid-container > div.buttons {

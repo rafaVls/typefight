@@ -62,12 +62,12 @@ button, input[type="submit"] {
 }
 
 input:not([type="submit"]), select {
-    min-height: 50px;
+    min-height: 30px;
     min-width: 300px;
     padding: 0.5rem 1rem;
     margin-top: 10px;
     
-    font-size: 1.75rem;
+    font-size: 1.6rem;
     font-family: var(--font-regular);
     border-radius: 2rem;
 }

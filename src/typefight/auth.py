@@ -1,8 +1,8 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, g, redirect, render_template, request, session, url_for
 )
 
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import generate_password_hash
 from psycopg2.extras import RealDictCursor
 
 from typefight.db import get_db
@@ -15,10 +15,6 @@ import secrets
 import hashlib
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
-
-@bp.route("/")
-def auth():
-    return render_template("auth.html")
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
@@ -41,84 +37,81 @@ def register():
             )
             db.commit()
 
-        return redirect(url_for("auth.auth"))
+        return redirect(url_for(".login"))
 
-    return render_template("auth.html", form=form)
-    
-@bp.route("/login", methods=["POST"])
-def login():
-    player_name = request.form["username"]
-    password = request.form["password"]
-
-    db = get_db()
-    cur = db.cursor(cursor_factory=RealDictCursor)
-    error = None
-
-    cur.execute(
-        """
-        SELECT * 
-        FROM players 
-        WHERE player_name = %s;
-        """, (player_name, )
+    return render_template(
+        "auth.html", 
+        register_form=form,
+        login_form=forms.LoginForm()
     )
-    player = cur.fetchone()
-    cur.close()
-
-    if player is None:
-        error = "Incorrect username."
-    elif not check_password_hash(player["pass_hash"], password + player["salt"]):
-        error = "Incorrect password."
     
-    if error is None:
-        session.clear()
+@bp.route("/login", methods=["GET", "POST"])
+def login():
+    form = forms.LoginForm(request.form)
 
-        # if login was successful, store the session hash in session for future requests
-        now = datetime.now().strftime("%H%M%S")
-        encoded_str = str(player["player_name"] + now).encode("utf-8")
+    if request.method == "POST" and form.validate():
+        player_name = form.username.data
 
-        session_hash = hashlib.sha512(encoded_str).hexdigest()
-
-        cur = db.cursor()
-        try:
+        db = get_db()
+        with contextlib.closing(db.cursor(cursor_factory=RealDictCursor)) as cur:
             cur.execute(
                 """
-                SELECT session_hash
-                FROM sessions
-                WHERE player_uid = %s;
-                """, (player["player_uid"], )
+                SELECT * 
+                FROM players 
+                WHERE player_name = %s;
+                """, (player_name, )
             )
-            existing_session = cur.fetchone()
+            player = cur.fetchone()
 
-            if existing_session is None:
+        # if login was successful, store the session hash in session for future requests
+        session.clear()
+        now = datetime.now().strftime("%H%M%S")
+        encoded_str = str(player["player_name"] + now).encode("utf-8")
+        session_hash = hashlib.sha512(encoded_str).hexdigest()
+
+        with contextlib.closing(db.cursor()) as cur:
+            try:
                 cur.execute(
                     """
-                    INSERT INTO sessions(session_hash, player_uid)
-                    VALUES(%s, %s);
-                    """, (session_hash, player["player_uid"])
-                )
-                db.commit()
-            else:
-                cur.execute(
-                    """
-                    UPDATE sessions
-                    SET session_hash = %s,
-                        login_date = NOW()
+                    SELECT session_hash
+                    FROM sessions
                     WHERE player_uid = %s;
-                    """, (session_hash, player["player_uid"])
+                    """, (player["player_uid"], )
                 )
-                db.commit()
+                existing_session = cur.fetchone()
 
-        except Exception as e:
-            print(f"An exception has occured during {request}:", e)
-            print("Exception TYPE: ", type(e))
+                if existing_session is None:
+                    cur.execute(
+                        """
+                        INSERT INTO sessions(session_hash, player_uid)
+                        VALUES(%s, %s);
+                        """, (session_hash, player["player_uid"])
+                    )
+                    db.commit()
+                else:
+                    cur.execute(
+                        """
+                        UPDATE sessions
+                        SET session_hash = %s,
+                            login_date = NOW()
+                        WHERE player_uid = %s;
+                        """, (session_hash, player["player_uid"])
+                    )
+                    db.commit()
 
-        cur.close()
+            except Exception as e:
+                print(f"An exception has occured during {request}:", e)
+                print("Exception TYPE: ", type(e))
 
         session["session_hash"] = session_hash
         return redirect(url_for("game.index"))
     
-    flash(error)
-    return render_template("auth.html")
+    return render_template(
+        "auth.html", 
+        register_form=forms.RegistrationForm(), 
+        login_form=form,
+        login=True
+    )
 
 @bp.route("/logout")
 def logout():
@@ -126,7 +119,7 @@ def logout():
     session.clear()
 
     with get_db() as db:
-        with db.cursor() as cur:
+        with contextlib.closing(db.cursor()) as cur:
             cur.execute(
                 """
                 DELETE FROM sessions
@@ -134,7 +127,6 @@ def logout():
                 """, (session_hash, )
             )
             db.commit()
-            cur.close()
 
     return redirect(url_for("game.index"))
 
@@ -146,7 +138,7 @@ def load_logged_in_user():
         g.user = None
     else:
         with get_db() as db:
-            with db.cursor(cursor_factory=RealDictCursor) as cur:
+            with contextlib.closing(db.cursor(cursor_factory=RealDictCursor)) as cur:
                 cur.execute(
                     """
                     SELECT player_uid
@@ -164,7 +156,6 @@ def load_logged_in_user():
                     """, (player_uid, )
                     )
                 g.user = cur.fetchone()
-                cur.close()
 
 def login_required(view):
     @functools.wraps(view)

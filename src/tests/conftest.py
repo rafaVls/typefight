@@ -64,12 +64,13 @@ def test_client(flask_app):
             yield testing_client # this is where the testing happens
 
 @pytest.fixture()
-def register_response(test_client, user_info={"username": "a", "password": "a", "country": "Mexico"}):
+def register_response(test_client, user_info={"username": "test123", "password": "test123", "country": "Mexico"}):
     response = test_client.post(
         "/auth/register",
         data={
             "username": user_info["username"],
             "password": user_info["password"],
+            "confirm": user_info["password"],
             "country": user_info["country"]
         },
         follow_redirects=True
@@ -78,7 +79,7 @@ def register_response(test_client, user_info={"username": "a", "password": "a", 
     return response
 
 @pytest.fixture()
-def login_response(test_client, user_info={"username": "test", "password": "test"}):
+def login_response(test_client, user_info={"username": "test123", "password": "test123"}):
     response = test_client.post(
         "/auth/login",
         data={

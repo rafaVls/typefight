@@ -49,8 +49,8 @@ class TestHighscores:
 
         response = test_client.get("/highscores")
         test_score = {
-            "country": "test",
-            "player_name": "test",
+            "country": "Mexico",
+            "player_name": "test123",
             "score": 13.37
         }
 
